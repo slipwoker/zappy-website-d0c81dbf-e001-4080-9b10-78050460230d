@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>מייעוץ ראשוני ועד מפתח ביד — יעל טומשין אדריכלות ועיצוב</title>
+    <meta name="description" content="ניהול פרויקט מלא, תכנון אדריכלי, עיצוב פנים, תמ״א 38, פינוי בינוי וחיזוק מבנים — מעטפת מקצועית שלמה ללקוחות פרטיים וליזמים. גלו את כל השירותים.">
+    <meta name="keywords" content="התחדשות עירונית תמ״א 38, פינוי בינוי, ניהול פרויקט אדריכלות, משרד אדריכלות ועיצוב פנים, חיזוק מבנים">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'd0c81dbf-e001-4080-9b10-78050460230d',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="מייעוץ ראשוני ועד מפתח ביד — יעל טומשין אדריכלות ועיצוב">
+  <meta property="og:description" content="ניהול פרויקט מלא, תכנון אדריכלי, עיצוב פנים, תמ״א 38, פינוי בינוי וחיזוק מבנים — מעטפת מקצועית שלמה ללקוחות פרטיים וליזמים. גלו את כל השירותים.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="מייעוץ ראשוני ועד מפתח ביד — יעל טומשין אדריכלות ועיצוב">
+  <meta name="twitter:description" content="ניהול פרויקט מלא, תכנון אדריכלי, עיצוב פנים, תמ״א 38, פינוי בינוי וחיזוק מבנים — מעטפת מקצועית שלמה ללקוחות פרטיים וליזמים. גלו את כל השירותים.">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="mobile-lang-menu-deployed-css">
+    @media (max-width: 768px) {
+      .lang-switcher,
+      .nav-cta-container .lang-switcher,
+      .nav-container .lang-switcher,
+      .navbar .lang-switcher,
+      .navbar .nav-cta-container .lang-switcher,
+      .nav-icons-left .lang-switcher,
+      .nav-ecommerce-icons .lang-switcher { display: none !important; }
+      .mobile-lang-menu { width: 100%; border-top: 1px solid rgba(128,128,128,0.2); padding: 8px 0 0 0; margin-top: 8px; }
+      .mobile-lang-toggle { display: flex !important; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; background: none; border: none; cursor: pointer; font-size: 15px; color: inherit; font-family: inherit; }
+      .mobile-lang-toggle::after { content: ''; display: inline-block; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.3s ease; margin-left: 8px; }
+      .mobile-lang-toggle.expanded::after { transform: rotate(-135deg); }
+      .mobile-lang-options { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+      .mobile-lang-options.expanded { max-height: 300px; }
+      .mobile-lang-option { display: flex !important; align-items: center; gap: 10px; padding: 10px 24px; text-decoration: none; color: inherit; font-size: 14px; font-family: inherit; }
+      .mobile-lang-option:hover { background: rgba(128,128,128,0.1); }
+      .mobile-lang-option.active { font-weight: 600; opacity: 0.7; pointer-events: none; }
+      .mobile-lang-option img { width: 20px; height: 20px; border-radius: 50%; }
+    }
+    @media (min-width: 769px) {
+      .mobile-lang-menu { display: none !important; }
+    }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      #mic-access-tool-general-button, .mic-access-tool-general-button,
+      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+      }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="[business_phone]" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-right-group"><div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.webp" alt="יעל טומשין אדריכלות ועיצוב" class="logo">
+      </a>
+    </div><ul class="nav-menu" id="navMenu"><li><a href="/about">אודות</a></li><li><a href="/projects">פרויקטים</a></li><li><a href="/services">שירותים</a></li><li><a href="/blog">בלוג</a></li></ul></div>
+
+    
+
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '50%', 'important');
+          mobileToggle.style.setProperty('transform', 'translateY(-50%)', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '50%', 'important');
+          phoneBtn.style.setProperty('transform', 'translateY(-50%)', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu on button click - use newToggle now
+    newToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = this.querySelector('.hamburger-icon');
+      const closeIcon = this.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    });
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // === WHATSAPP BUTTON VISIBILITY FIX ===
+    // Ensure WhatsApp floating button is hidden on desktop and visible on mobile
+    // IMPORTANT: Only target the floating button by its class, NOT generic wa.me links
+    const handleWhatsAppVisibility = function() {
+      const whatsappBtn = document.querySelector('.whatsapp-float');
+      if (whatsappBtn) {
+        const isDesktop = window.innerWidth >= 769;
+        if (isDesktop) {
+          whatsappBtn.style.setProperty('display', 'none', 'important');
+          whatsappBtn.style.setProperty('visibility', 'hidden', 'important');
+          whatsappBtn.style.setProperty('opacity', '0', 'important');
+          whatsappBtn.style.setProperty('pointer-events', 'none', 'important');
+          console.log('[WhatsApp] Button hidden on desktop');
+        } else {
+          whatsappBtn.style.removeProperty('display');
+          whatsappBtn.style.removeProperty('visibility');
+          whatsappBtn.style.removeProperty('opacity');
+          whatsappBtn.style.removeProperty('pointer-events');
+          console.log('[WhatsApp] Button visible on mobile');
+        }
+      }
+    };
+    
+    // Run on load
+    handleWhatsAppVisibility();
+    
+    // Run on resize with debouncing
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleWhatsAppVisibility, 100);
+    });
+  });
+})();
+
+</script>
+  
+  <main>
+    <section class="services-intro-section" data-layout-spec="שירותים-intro" dir="rtl">
+  <div class="services-intro-container">
+    <div class="services-intro-grid">
+
+      <!-- Text Block (START / RIGHT side in RTL) -->
+      <div class="services-intro-text">
+        <p class="services-intro-label">שירותים מקצועיים</p>
+        <h1 class="services-intro-heading">מעטפת מקצועית מלאה —<br>מהרעיון ועד המפתח</h1>
+        <div class="services-intro-rule"></div>
+        <p class="services-intro-body">משרד <strong>יעל טומשין אדריכלות ועיצוב</strong> מלווה את לקוחותיו בכל שלב — החל מבדיקת התכנות וזכויות בנייה, דרך תכנון אדריכלי מפורט ותיאום בין יועצים מקצועיים, ועד ניהול מלא מול קבלנים ורשויות. הניסיון הרב שנצבר בפרויקטים בקנה מידה רחב — בנייה רוויה, התחדשות עירונית, תמ"א 38 ופינוי-בינוי — מועמד לשירות כל לקוח, גדול כקטן.</p>
+        <p class="services-intro-body">בין אם מדובר בבית פרטי חדש, שיפוץ מקיף, עיצוב פנים בהתאמה אישית, או פרויקט בנייה רוויה מורכב — אנו מביאים לכל מטלה את אותה רמת דיוק, קפדנות ורגישות עיצובית.</p>
+        <div class="services-intro-stats">
+          <div class="services-intro-stat">
+            <span class="stat-number">30+</span>
+            <span class="stat-label">שנות ניסיון</span>
+          </div>
+          <div class="services-intro-stat-divider"></div>
+          <div class="services-intro-stat">
+            <span class="stat-number">2005</span>
+            <span class="stat-label">שנת הקמה</span>
+          </div>
+          <div class="services-intro-stat-divider"></div>
+          <div class="services-intro-stat">
+            <span class="stat-number">360°</span>
+            <span class="stat-label">ליווי מלא</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Block (END / Left side in RTL) -->
+      <div class="services-intro-image-block">
+        <div class="services-intro-image-frame">
+          <img data-placeholder="services-intro-image-1" data-context="Architectural studio detail: an elegant hand-drawn architectural sketch or blueprint plan laid on a cream drafting table, with a mechanical pencil, a thin metal ruler, and a small architectural scale model nearby. Warm natural light from the side. Minimal, precise, premium feel. Warm cream and graphite tones. Boutique architecture studio atmosphere." width="560" height="680" src="/assets/site-services-intro-image-1.webp" alt="סקיצה אדריכלית — יעל טומשין אדריכלות ועיצוב">
+        </div>
+        <div class="services-intro-image-caption">
+          <span>תכנון מדויק · עיצוב מרגש · ביצוע מושלם</span>
+        </div>
+        <!-- Decorative accent corner -->
+        <div class="services-intro-accent-corner" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom technical grid-line divider -->
+  <div class="services-intro-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1280 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Fading horizontal grid lines -->
+      <line x1="0" y1="18" x2="1280" y2="18" stroke="#C8A96E" stroke-width="0.5" stroke-opacity="0.22"></line>
+      <line x1="0" y1="36" x2="1280" y2="36" stroke="#C8A96E" stroke-width="0.5" stroke-opacity="0.16"></line>
+      <line x1="0" y1="54" x2="1280" y2="54" stroke="#C8A96E" stroke-width="0.5" stroke-opacity="0.10"></line>
+      <line x1="0" y1="72" x2="1280" y2="72" stroke="#C8A96E" stroke-width="0.5" stroke-opacity="0.05"></line>
+      <!-- Vertical grid lines -->
+      <line x1="160" y1="0" x2="160" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="320" y1="0" x2="320" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="480" y1="0" x2="480" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="640" y1="0" x2="640" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="800" y1="0" x2="800" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="960" y1="0" x2="960" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <line x1="1120" y1="0" x2="1120" y2="90" stroke="#C8A96E" stroke-width="0.4" stroke-opacity="0.12"></line>
+      <!-- Fade-to-next fill -->
+      <defs>
+        <linearGradient id="gridFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F3ECE3" stop-opacity="0"></stop>
+          <stop offset="100%" stop-color="#F3ECE3" stop-opacity="1"></stop>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1280" height="90" fill="url(#gridFade)"></rect>
+    </svg>
+  </div>
+
+</section>
+
+<section class="services-services-section" data-layout-spec="שירותים-services" dir="rtl">
+  <div class="services-services-container">
+    <div class="services-services-header">
+      <span class="services-services-eyebrow">תחומי הפעילות</span>
+      <h2 class="services-services-title">מה אנחנו מציעים</h2>
+      <p class="services-services-subtitle">מעטפת מקצועית מלאה — מבדיקת זכויות ראשונית ועד ליווי ביצוע. משרד אדריכלות ועיצוב פנים בוטיק עם יכולת עבודה על פרויקטים מורכבים בכל קנה מידה.</p>
+    </div>
+
+    <div class="services-services-grid">
+
+      <!-- Card 1: בנייה רוויה והתחדשות עירונית -->
+      <article class="services-service-card">
+        <div class="services-card-inner">
+          <div class="services-card-top">
+            <span class="services-card-number">01</span>
+            <div class="services-card-accent-line"></div>
+          </div>
+          <h3 class="services-card-title">בנייה רוויה והתחדשות עירונית</h3>
+          <p class="services-card-desc">תכנון פרויקטים מורכבים בקנה מידה רחב — בניינים רב-משפחתיים חדשים, תמ״א 38, פינוי-בינוי וחיזוק מבנים קיימים. הניסיון הרב שלנו מאפשר ניווט מיומן מול רשויות, ועדות תכנון ויזמים.</p>
+          <div class="services-card-deliverables">
+            <p class="services-card-deliverables-label">היקף השירות</p>
+            <p class="services-card-deliverables-text">תכנון אדריכלי מלא, תיאום יועצים, הגשות לרשויות, ניהול פרויקט מול קבלנים, ליווי עד שלב האכלוס.</p>
+          </div>
+          <div class="services-card-client">
+            <p class="services-card-client-label">מתאים ל</p>
+            <p class="services-card-client-text">יזמים, חברות בנייה ובעלי קרקע המעוניינים במיצוי מלא של זכויות הבנייה.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: בתים פרטיים ושיפוצים -->
+      <article class="services-service-card">
+        <div class="services-card-inner">
+          <div class="services-card-top">
+            <span class="services-card-number">02</span>
+            <div class="services-card-accent-line"></div>
+          </div>
+          <h3 class="services-card-title">בתים פרטיים, שיפוצים ועיצוב פנים</h3>
+          <p class="services-card-desc">תכנון בתים פרטיים חדשים, הרחבות ושיפוצים מקיפים, לצד עיצוב פנים מותאם אישית. כל פרויקט מקבל תשומת לב מלאה ורגישות עיצובית גבוהה — מהרעיון ועד לפרט הקטן ביותר.</p>
+          <div class="services-card-deliverables">
+            <p class="services-card-deliverables-label">היקף השירות</p>
+            <p class="services-card-deliverables-text">תכנון שטחים, בחירת חומרים וגוונים, פריסת ריהוט, תיאום קבלנים ופיקוח שוטף לאורך כל הביצוע.</p>
+          </div>
+          <div class="services-card-client">
+            <p class="services-card-client-label">מתאים ל</p>
+            <p class="services-card-client-text">בעלי בתים ומשפחות המחפשים ליווי אישי ומקצועי מהשלב הראשון ועד המפתח.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: ייעוץ, זכויות והתכנות -->
+      <article class="services-service-card">
+        <div class="services-card-inner">
+          <div class="services-card-top">
+            <span class="services-card-number">03</span>
+            <div class="services-card-accent-line"></div>
+          </div>
+          <h3 class="services-card-title">ייעוץ תכנוני, זכויות בנייה והתכנות</h3>
+          <p class="services-card-desc">בדיקת זכויות בנייה לפני רכישת נכס, מיצוי פוטנציאל תכנוני, ייעוץ לגבי היתכנות פרויקט וחוות דעת מקצועית. שירות קריטי שחוסך זמן, כסף וטעויות יקרות מראש.</p>
+          <div class="services-card-deliverables">
+            <p class="services-card-deliverables-label">היקף השירות</p>
+            <p class="services-card-deliverables-text">בדיקת תב״ע וזכויות, חוות דעת כתובה, ייעוץ פרונטלי, הערכת עלויות תכנון ולוחות זמנים ריאליים.</p>
+          </div>
+          <div class="services-card-client">
+            <p class="services-card-client-label">מתאים ל</p>
+            <p class="services-card-client-text">רוכשי נכסים, יזמים בשלב הבדיקה המוקדמת, ובעלי נכסים המעוניינים להבין את הפוטנציאל הטמון ברכושם.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: תכנון נגישות -->
+      <article class="services-service-card">
+        <div class="services-card-inner">
+          <div class="services-card-top">
+            <span class="services-card-number">04</span>
+            <div class="services-card-accent-line"></div>
+          </div>
+          <h3 class="services-card-title">תכנון נגישות (מתו״ס)</h3>
+          <p class="services-card-desc">תכנון ויישום פתרונות נגישות בהתאם לתקנות הנגישות הישראליות. ליווי מקצועי מלא מול מתאמי נגישות ורשויות, תוך שילוב הנגישות כחלק אינטגרלי מהעיצוב ולא כתוספת בדיעבד.</p>
+          <div class="services-card-deliverables">
+            <p class="services-card-deliverables-label">היקף השירות</p>
+            <p class="services-card-deliverables-text">סקר נגישות, תכנון פתרונות, עבודה מול מתו״ס, הגשת תוכניות ואישורים, פיקוח ביצוע נגישות.</p>
+          </div>
+          <div class="services-card-client">
+            <p class="services-card-client-label">מתאים ל</p>
+            <p class="services-card-client-text">בעלי מבנים ציבוריים, מסחריים ומגורים הנדרשים לעמוד בדרישות הנגישות הרגולטוריות.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="services-services-cta">
+      <a href="/contact" class="btn-primary services-cta-btn">תיאום פגישת היכרות</a>
+    </div>
+  </div>
+
+  <!-- Bottom angled bronze rule divider -->
+  <div class="services-services-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bronzeRule" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(183,132,65,0.0)"></stop>
+          <stop offset="20%" stop-color="rgba(183,132,65,0.35)"></stop>
+          <stop offset="50%" stop-color="rgba(183,132,65,0.55)"></stop>
+          <stop offset="80%" stop-color="rgba(183,132,65,0.35)"></stop>
+          <stop offset="100%" stop-color="rgba(183,132,65,0.0)"></stop>
+        </linearGradient>
+      </defs>
+      <polygon points="0,56 1440,56 1440,18 0,44" fill="#2E2B28"></polygon>
+      <line x1="0" y1="44" x2="1440" y2="18" stroke="url(#bronzeRule)" stroke-width="1.5"></line>
+    </svg>
+  </div>
+</section>
+
+<section class="services-capabilities-section" data-layout-spec="שירותים-capabilities" dir="rtl">
+  <div class="services-capabilities-container">
+
+    <!-- Section Header -->
+    <div class="services-capabilities-header">
+      <span class="services-capabilities-eyebrow">המעטפת המקצועית המלאה</span>
+      <h2 class="services-capabilities-title">ליווי אדריכלי מקצה לקצה</h2>
+      <p class="services-capabilities-subtitle">ממשרד אדריכלות ועיצוב פנים בוטיק עם למעלה מ-30 שנות ניסיון — כל שלב בפרויקט מתוכנן, מתואם ומלווה באופן אישי ומדויק.</p>
+    </div>
+
+    <!-- Main Content: Timeline + Image -->
+    <div class="services-capabilities-body">
+
+      <!-- Vertical Timeline -->
+      <div class="services-capabilities-timeline">
+
+        <!-- Block 1 -->
+        <div class="capability-block">
+          <div class="capability-connector">
+            <div class="capability-node">
+              <span class="capability-number">01</span>
+            </div>
+            <div class="capability-line"></div>
+          </div>
+          <div class="capability-content">
+            <div class="capability-icon-wrap">
+              <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="3" y="3" width="22" height="22" rx="2" stroke="currentColor" stroke-width="1.4"></rect>
+                <line x1="3" y1="9" x2="25" y2="9" stroke="currentColor" stroke-width="1.2"></line>
+                <line x1="9" y1="3" x2="9" y2="25" stroke="currentColor" stroke-width="1.2"></line>
+                <circle cx="6" cy="6" r="1.2" fill="currentColor"></circle>
+                <line x1="13" y1="14" x2="22" y2="14" stroke="currentColor" stroke-width="1.2"></line>
+                <line x1="13" y1="18" x2="20" y2="18" stroke="currentColor" stroke-width="1.2"></line>
+              </svg>
+            </div>
+            <div class="capability-text">
+              <h3 class="capability-title">בדיקת היתכנות וזכויות בנייה</h3>
+              <p class="capability-desc">בחינה מקיפה של פוטנציאל הנכס עוד לפני קבלת החלטות — סקירת תכניות מתאר, מיצוי זכויות בנייה, בדיקת חריגות ואפשרויות הרחבה. בסיס מוצק לכל פרויקט, בין אם מדובר ברכישת נכס חדש, התחדשות עירונית (תמ"א 38, פינוי בינוי) או בנייה רוויה.</p>
+              <div class="capability-tags">
+                <span class="cap-tag">זכויות בנייה</span>
+                <span class="cap-tag">ייעוץ תכנוני</span>
+                <span class="cap-tag">מיצוי זכויות</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block 2 -->
+        <div class="capability-block">
+          <div class="capability-connector">
+            <div class="capability-node">
+              <span class="capability-number">02</span>
+            </div>
+            <div class="capability-line"></div>
+          </div>
+          <div class="capability-content">
+            <div class="capability-icon-wrap">
+              <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 24 L4 8 L14 4 L24 8 L24 24" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path>
+                <rect x="10" y="15" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.2"></rect>
+                <rect x="6" y="11" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.2"></rect>
+                <rect x="18" y="11" width="4" height="4" rx="0.5" stroke="currentColor" stroke-width="1.2"></rect>
+                <line x1="14" y1="4" x2="14" y2="7" stroke="currentColor" stroke-width="1.2"></line>
+              </svg>
+            </div>
+            <div class="capability-text">
+              <h3 class="capability-title">תכנון אדריכלי מלא</h3>
+              <p class="capability-desc">עיצוב ותכנון מפורט מהרעיון ועד לתוכניות הביצוע — בתים פרטיים, שיפוצים, הרחבות, בנייה רוויה ופרויקטים של התחדשות עירונית. כל פרויקט מקבל מענה יצירתי ומדויק המשלב רגישות עיצובית עם תכנון טכני קפדני, תוך שמירה על לוחות זמנים ותקציב.</p>
+              <div class="capability-tags">
+                <span class="cap-tag">תכנון אדריכלי</span>
+                <span class="cap-tag">עיצוב פנים</span>
+                <span class="cap-tag">תוכניות ביצוע</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block 3 -->
+        <div class="capability-block">
+          <div class="capability-connector">
+            <div class="capability-node">
+              <span class="capability-number">03</span>
+            </div>
+            <div class="capability-line"></div>
+          </div>
+          <div class="capability-content">
+            <div class="capability-icon-wrap">
+              <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.4"></circle>
+                <circle cx="7" cy="10" r="2.5" stroke="currentColor" stroke-width="1.2"></circle>
+                <circle cx="21" cy="10" r="2.5" stroke="currentColor" stroke-width="1.2"></circle>
+                <circle cx="14" cy="20" r="2.5" stroke="currentColor" stroke-width="1.2"></circle>
+                <line x1="9.2" y1="11.2" x2="12" y2="18.5" stroke="currentColor" stroke-width="1.1"></line>
+                <line x1="18.8" y1="11.2" x2="16" y2="18.5" stroke="currentColor" stroke-width="1.1"></line>
+                <line x1="9.5" y1="10" x2="18.5" y2="10" stroke="currentColor" stroke-width="1.1"></line>
+              </svg>
+            </div>
+            <div class="capability-text">
+              <h3 class="capability-title">תיאום יועצים מקצועיים</h3>
+              <p class="capability-desc">ניהול ותיאום מלא מול כלל היועצים המעורבים בפרויקט — קונסטרוקטור, מהנדס מע"מ, יועץ נגישות (מתו"ס), יועץ אקוסטיקה ועוד. המשרד משמש כנקודת ממשק אחת ומוודא שכל הדיסציפלינות מדברות בשפה אחת לאורך כל שלבי התכנון.</p>
+              <div class="capability-tags">
+                <span class="cap-tag">תיאום יועצים</span>
+                <span class="cap-tag">נגישות מתו"ס</span>
+                <span class="cap-tag">ניהול מקצועי</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Block 4 -->
+        <div class="capability-block capability-block--last">
+          <div class="capability-connector">
+            <div class="capability-node">
+              <span class="capability-number">04</span>
+            </div>
+          </div>
+          <div class="capability-content">
+            <div class="capability-icon-wrap">
+              <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 22 L5 12 L14 6 L23 12 L23 22 Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path>
+                <path d="M10 22 L10 16 L14 14 L18 16 L18 22" stroke="currentColor" stroke-width="1.2"></path>
+                <path d="M5 14 L2 14" stroke="currentColor" stroke-width="1.2"></path>
+                <path d="M23 14 L26 14" stroke="currentColor" stroke-width="1.2"></path>
+                <circle cx="14" cy="10" r="1.5" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <div class="capability-text">
+              <h3 class="capability-title">ליווי מול קבלנים ורשויות</h3>
+              <p class="capability-desc">ליווי צמוד לאורך כל שלב הביצוע — הגשת בקשות להיתר, מעקב אחר אישורים ברשויות התכנון, פיקוח על עבודות הקבלן ווידוא שהביצוע נאמן לתוכניות. הלקוח מקבל שקט נפשי מלא עם ידיעה שגורם מקצועי מנוסה עומד לצידו עד גמר הפרויקט.</p>
+              <div class="capability-tags">
+                <span class="cap-tag">פיקוח עליון</span>
+                <span class="cap-tag">היתרי בנייה</span>
+                <span class="cap-tag">ליווי ביצוע</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Timeline -->
+
+      <!-- Side Image Panel -->
+      <aside class="services-capabilities-image-panel">
+        <div class="services-capabilities-image-wrap">
+          <img data-placeholder="services-capabilities-image-1" data-context="Professional architect reviewing detailed architectural blueprints and building plans spread on a large drafting table in a refined studio environment. Warm graphite tones, precision drafting tools, rolled drawings, and a model of a multi-story residential building visible in the background. Atmosphere of institutional expertise combined with boutique personal attention. Warm ambient lighting, architectural photography style." width="600" height="780" src="/assets/site-services-capabilities-image-1.webp" alt="יעל טומשין אדריכלות — תכנון ופיקוח מקצועי על פרויקטים אדריכליים">
+          <div class="services-capabilities-image-badge">
+            <span class="badge-number">30+</span>
+            <span class="badge-label">שנות ניסיון</span>
+          </div>
+        </div>
+        <div class="services-capabilities-stat-row">
+          <div class="services-stat-item">
+            <span class="stat-value">2005</span>
+            <span class="stat-label">שנת הקמה</span>
+          </div>
+          <div class="services-stat-divider"></div>
+          <div class="services-stat-item">
+            <span class="stat-value">360°</span>
+            <span class="stat-label">מעטפת שירות</span>
+          </div>
+          <div class="services-stat-divider"></div>
+          <div class="services-stat-item">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">ליווי אישי</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+    <!-- End Body -->
+
+  </div>
+
+  <!-- Bottom arch divider transitioning to lighter section -->
+  <div class="services-capabilities-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,90 L0,60 Q360,0 720,10 Q1080,20 1440,60 L1440,90 Z" fill="#F7F2EB"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section class="services-advisory-section" data-layout-spec="שירותים-advisory" dir="rtl">
+  <div class="services-advisory-container">
+
+    <!-- Section Header -->
+    <div class="services-advisory-header">
+      <span class="services-advisory-label">שירותי ייעוץ</span>
+      <h2 class="services-advisory-title">ייעוץ אדריכלי מקצועי לפני שמקבלים החלטות</h2>
+      <p class="services-advisory-subtitle">לפני שרוכשים נכס, מתחילים בתכנון, או חותמים על עסקה — ייעוץ מקצועי של משרד אדריכלות ועיצוב פנים מנוסה יכול לחסוך עלויות גבוהות, למנוע טעויות יקרות, ולפתוח בפניכם אפשרויות שלא ידעתם שקיימות. אנו מציעים שתי מסגרות ייעוץ ממוקדות שנועדו להעניק לכם תמונה ברורה ומלאה.</p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="services-advisory-grid">
+
+      <!-- Card 1: Pre-purchase rights check -->
+      <article class="services-advisory-card">
+        <div class="services-advisory-card-top">
+          <div class="services-advisory-icon-wrap">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="4" y="3" width="18" height="24" rx="2"></rect>
+              <path d="M8 9h10M8 13h10M8 17h6"></path>
+              <circle cx="23" cy="23" r="5"></circle>
+              <path d="M26.5 26.5l2 2"></path>
+            </svg>
+          </div>
+          <div class="services-advisory-card-label">בדיקה לפני רכישה</div>
+        </div>
+
+        <h3 class="services-advisory-card-title">בדיקת זכויות בנייה לפני רכישת נכס</h3>
+
+        <p class="services-advisory-card-desc">לפני שחותמים על חוזה רכישה, חשוב לדעת בדיוק מה רוכשים — לא רק מבחינה פיזית, אלא גם מבחינה תכנונית. אנו בוחנים את הנכס מול תוכניות המתאר הרלוונטיות, בודקים את זכויות הבנייה הקיימות והמנוצלות, מאתרים חריגות בנייה, הגבלות, ייעודי קרקע, ומגבלות תכנוניות שעלולות להשפיע על ערך הנכס ועל אפשרויות הפיתוח שלו.</p>
+
+        <ul class="services-advisory-list">
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>בחינת תוכניות מתאר ותב"ע</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>איתור חריגות בנייה והגבלות</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>הערכת פוטנציאל תכנוני</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>דוח ממצאים מפורט בכתב</span>
+          </li>
+        </ul>
+
+        <div class="services-advisory-card-image-wrap">
+          <img data-placeholder="services-advisory-image-1" data-context="Architect reviewing architectural blueprints and building rights documents at a drafting table, with urban planning maps spread out, warm natural light, professional architecture studio setting, cream and warm tones" width="600" height="300" src="/assets/site-services-advisory-image-1.webp" alt="בדיקת זכויות בנייה לפני רכישת נכס">
+        </div>
+
+        <a href="/contact" class="services-advisory-cta">
+          <span>לתיאום ייעוץ</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 8H3"></path>
+            <path d="M6 5l-3 3 3 3"></path>
+          </svg>
+        </a>
+      </article>
+
+      <!-- Card 2: Rights maximization and planning consultation -->
+      <article class="services-advisory-card">
+        <div class="services-advisory-card-top">
+          <div class="services-advisory-icon-wrap">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 26V18l10-14 10 14v8"></path>
+              <path d="M12 26v-6h8v6"></path>
+              <path d="M6 18h20"></path>
+              <path d="M16 4v4"></path>
+            </svg>
+          </div>
+          <div class="services-advisory-card-label">מיצוי וייעוץ</div>
+        </div>
+
+        <h3 class="services-advisory-card-title">מיצוי זכויות וייעוץ תכנוני</h3>
+
+        <p class="services-advisory-card-desc">לנכסים רבים קיים פוטנציאל תכנוני שלא מנוצל. אנו בוחנים לעומק את מכלול זכויות הבנייה הקיימות, בודקים אפשרויות להרחבה, תוספות בנייה, שינוי ייעוד, ומסלולי התחדשות עירונית כגון תמ"א 38 ופינוי בינוי. הייעוץ מספק תמונת מצב מלאה ותכנית פעולה ברורה — כדי שתוכלו לקבל החלטות מושכלות ולמצות את הפוטנציאל האמיתי של הנכס.</p>
+
+        <ul class="services-advisory-list">
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>בחינת אפשרויות הרחבה ותוספות</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>בדיקת התאמה לתמ"א 38 ופינוי בינוי</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>ייעוץ לשינוי ייעוד קרקע</span>
+          </li>
+          <li>
+            <span class="services-advisory-check" aria-hidden="true"></span>
+            <span>תכנית פעולה אסטרטגית לנכס</span>
+          </li>
+        </ul>
+
+        <div class="services-advisory-card-note">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="9" r="7"></circle>
+            <path d="M9 6v3l2 2"></path>
+          </svg>
+          <span>פגישת ייעוץ ראשונית עד 90 דקות, כוללת סיכום בכתב</span>
+        </div>
+
+        <a href="/contact" class="services-advisory-cta">
+          <span>לתיאום ייעוץ</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 8H3"></path>
+            <path d="M6 5l-3 3 3 3"></path>
+          </svg>
+        </a>
+      </article>
+
+    </div>
+    <!-- End Cards Grid -->
+
+  </div>
+
+  <!-- Bottom dotted bronze divider -->
+  <div class="services-advisory-divider-wrap" aria-hidden="true">
+    <div class="services-advisory-dotted-line"></div>
+  </div>
+
+</section>
+
+<section class="services-accessibility-section" data-layout-spec="שירותים-accessibility" dir="rtl">
+  <div class="services-accessibility-container">
+
+    <!-- Centered H2 Header -->
+    <div class="services-accessibility-header">
+      <span class="services-accessibility-label">שירות מקצועי</span>
+      <h2 class="services-accessibility-title">תכנון נגישות (מתו"ס)</h2>
+      <div class="services-accessibility-divider"></div>
+    </div>
+
+    <!-- Two-Column Detail Block -->
+    <div class="services-accessibility-body">
+
+      <!-- START side: Explanatory Text -->
+      <div class="services-accessibility-text">
+        <p class="services-accessibility-lead">נגישות היא לא רק חובה חוקית — היא ביטוי לאדריכלות אנושית ומכילה. במשרד יעל טומשין אדריכלות ועיצוב, תכנון הנגישות משולב מהשלב הראשון של כל פרויקט, ולא מתווסף כתיקון בדיעבד.</p>
+        <p>אנו מספקים שירותי תכנון נגישות מלאים בהתאם לתקנות הנגישות הישראליות ולדרישות מתו"ס (מרכז תמיכה ועזרה לנגישות), תוך שמירה על איכות עיצובית גבוהה ורגישות אסתטית. הניסיון הרב שנצבר במשרד מאפשר שילוב חלק ומושכל של פתרונות נגישות בתוך שפת העיצוב הכוללת של הפרויקט.</p>
+        <ul class="services-accessibility-list">
+          <li>
+            <span class="services-accessibility-icon" aria-hidden="true">
+              <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"></circle>
+                <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>עמידה בתקנות הנגישות הישראליות ודרישות הרשויות</span>
+          </li>
+          <li>
+            <span class="services-accessibility-icon" aria-hidden="true">
+              <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"></circle>
+                <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>תכנון נתיבי גישה, כניסות, חנייה ומרחבי תמרון</span>
+          </li>
+          <li>
+            <span class="services-accessibility-icon" aria-hidden="true">
+              <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"></circle>
+                <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>התאמות פנים הבניין: שירותים, מעליות, מסדרונות</span>
+          </li>
+          <li>
+            <span class="services-accessibility-icon" aria-hidden="true">
+              <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"></circle>
+                <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>ליווי מול רשויות הרישוי וקבלת אישורי נגישות</span>
+          </li>
+          <li>
+            <span class="services-accessibility-icon" aria-hidden="true">
+              <svg data-element-type="icon" data-icon-type="svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.4"></circle>
+                <path d="M5.5 9.2L7.8 11.5L12.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </span>
+            <span>שילוב פתרונות נגישות בעיצוב הפנים ללא פגיעה אסתטית</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- END side: Project Relevance Card + Image -->
+      <div class="services-accessibility-aside">
+        <div class="services-accessibility-image-wrap">
+          <img data-placeholder="services-accessibility-image-1" data-context="Elegant architectural accessibility planning detail: a wide, naturally lit building entrance with smooth ramp integration, warm stone flooring, and subtle handrails — showing how accessibility design can be beautiful and unobtrusive in a luxury residential or mixed-use building in Israel" width="600" height="400" src="/assets/site-services-accessibility-image-1.webp" alt="תכנון נגישות אדריכלי — כניסה נגישה ואסתטית לבניין">
+        </div>
+        <div class="services-accessibility-relevance card-bordered">
+          <div class="services-accessibility-relevance-icon" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="26" height="26" rx="5" stroke="currentColor" stroke-width="1.4"></rect>
+              <circle cx="14" cy="9" r="2.5" stroke="currentColor" stroke-width="1.4"></circle>
+              <path d="M9 19c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+              <path d="M7 23h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+          </div>
+          <div class="services-accessibility-relevance-content">
+            <h3 class="services-accessibility-relevance-title">רלוונטי לכל סוגי הפרויקטים</h3>
+            <p class="services-accessibility-relevance-text">תכנון נגישות נדרש בבניינים חדשים ובשיפוצים כאחד — בין אם מדובר בבית פרטי, בניין מגורים רב-קומות, פרויקט התחדשות עירונית (תמ"א 38 או פינוי-בינוי), או מבנה ציבורי. אנו מטפלים בכל ההיבטים, מהתכנון הראשוני ועד לאישור הסופי.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Compact CTA Row -->
+    <div class="services-accessibility-cta">
+      <p class="services-accessibility-cta-text">מעוניינים לשמוע כיצד תכנון נגישות נכון יכול לשרת את הפרויקט שלכם?</p>
+      <a href="/contact" class="btn-primary services-accessibility-btn">לתיאום ייעוץ ראשוני</a>
+    </div>
+
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" dir="rtl">
+  <div class="footer-main">
+    <div class="footer-container">
+      <div class="footer-grid">
+
+        <!-- Column 1: Company Info -->
+        <div class="footer-col footer-brand">
+          <img src="/assets/logo.webp" alt="יעל טומשין אדריכלות ועיצוב" class="logo">
+          <p class="footer-tagline">אדריכלות · עיצוב פנים · התחדשות עירונית</p>
+          <p class="footer-desc">יצירת מרחבים מדויקים ואנושיים, המשלבים חזון אדריכלי עם חום ביתי. כל פרויקט הוא שיחה בין מקום, אור וחיים.</p>
+          <div class="footer-accent-line"></div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer-col">
+          <h3 class="footer-heading">ניווט מהיר</h3>
+          <ul class="footer-links">
+            <li><a href="/about"><span class="link-arrow">←</span> אודות</a></li>
+            <li><a href="/projects"><span class="link-arrow">←</span> פרויקטים</a></li>
+            <li><a href="/services"><span class="link-arrow">←</span> שירותים</a></li>
+            <li><a href="/blog"><span class="link-arrow">←</span> בלוג</a></li>
+            <li><a href="/contact"><span class="link-arrow">←</span> צור קשר</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="footer-col">
+          <h3 class="footer-heading">יצירת קשר</h3>
+          <ul class="footer-contact">
+            <li>
+              <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+              <a href="mailto:[business_email]">[business_email]</a>
+            </li>
+            <li>
+              <span class="contact-icon"><i class="fas fa-phone"></i></span>
+              <a href="tel:[business_phone]">[business_phone]</a>
+            </li>
+            <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+              <span>[business_address]</span></a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Social -->
+        <div class="footer-col footer-social-col">
+          <h3 class="footer-heading">עקבו אחרינו</h3>
+          <div class="footer-social">
+            <a href="[facebook_handle]" aria-label="Facebook" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="[instagram_handle]" aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="[whatsapp_handle]" aria-label="WhatsApp" class="social-link"><i class="fab fa-whatsapp"></i></a>
+          </div>
+          <div class="footer-newsletter">
+            <p class="newsletter-label">השאירו פרטים לייעוץ ראשוני</p>
+            <a href="/contact" class="footer-cta-btn">בואו נדבר</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <div class="footer-container">
+      <div class="footer-bottom-inner">
+        <p class="footer-copyright">© 2026 יעל טומשין אדריכלות ועיצוב. כל הזכויות שמורות.</p>
+        <div class="footer-legal">
+          <a href="/privacy">מדיניות פרטיות</a>
+          <span class="legal-sep">·</span>
+          <a href="/terms">תנאי שימוש</a>
+          <span class="legal-sep">·</span>
+          <a href="/accessibility">נגישות</a>
+          <span class="legal-sep">·</span>
+          <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+
+    <script id="zappy-mobile-lang-menu-script">
+    (function() {
+      function initMobileLangMenu() {
+        if (window.innerWidth > 768) {
+          var existingMenu = document.querySelector('.mobile-lang-menu');
+          if (existingMenu) existingMenu.remove();
+          return;
+        }
+        if (document.querySelector('.mobile-lang-menu')) return;
+        var switcher = document.querySelector('.lang-switcher');
+        if (!switcher) return;
+        var dropdown = switcher.querySelector('.lang-switcher-dropdown');
+        if (!dropdown) return;
+        var options = dropdown.querySelectorAll('.lang-option');
+        if (options.length === 0) return;
+        var navMenu = document.getElementById('navMenu') || document.querySelector('.nav-menu') || document.querySelector('nav ul');
+        if (!navMenu) return;
+        var currentLang = document.documentElement.lang || 'en';
+        var langConfigs = {
+          he: {name:'עברית',flag:'https://api.iconify.design/circle-flags/il.svg'},
+          en: {name:'English',flag:'https://api.iconify.design/circle-flags/us.svg'},
+          ar: {name:'العربية',flag:'https://api.iconify.design/circle-flags/sa.svg'},
+          fr: {name:'Français',flag:'https://api.iconify.design/circle-flags/fr.svg'},
+          es: {name:'Español',flag:'https://api.iconify.design/circle-flags/es.svg'},
+          de: {name:'Deutsch',flag:'https://api.iconify.design/circle-flags/de.svg'},
+          ru: {name:'Русский',flag:'https://api.iconify.design/circle-flags/ru.svg'},
+          zh: {name:'中文',flag:'https://api.iconify.design/circle-flags/cn.svg'},
+          ja: {name:'日本語',flag:'https://api.iconify.design/circle-flags/jp.svg'},
+          pt: {name:'Português',flag:'https://api.iconify.design/circle-flags/br.svg'},
+          it: {name:'Italiano',flag:'https://api.iconify.design/circle-flags/it.svg'},
+          ko: {name:'한국어',flag:'https://api.iconify.design/circle-flags/kr.svg'}
+        };
+        var container = document.createElement('div');
+        container.className = 'mobile-lang-menu';
+        var currentConfig = langConfigs[currentLang] || {name:currentLang,flag:''};
+        var toggleBtn = document.createElement('button');
+        toggleBtn.className = 'mobile-lang-toggle';
+        toggleBtn.type = 'button';
+        var currentFlagHtml = currentConfig.flag ? '<img src="' + currentConfig.flag + '" width="20" height="20" alt="" style="border-radius:50%;margin-right:8px;margin-left:8px;">' : '';
+        toggleBtn.innerHTML = currentFlagHtml + currentConfig.name;
+        container.appendChild(toggleBtn);
+        var optionsDiv = document.createElement('div');
+        optionsDiv.className = 'mobile-lang-options';
+        var currentLink = document.createElement('a');
+        currentLink.className = 'mobile-lang-option active';
+        currentLink.href = '#';
+        currentLink.innerHTML = currentFlagHtml + currentConfig.name;
+        optionsDiv.appendChild(currentLink);
+        options.forEach(function(opt) {
+          var link = document.createElement('a');
+          link.className = 'mobile-lang-option';
+          link.href = opt.getAttribute('href');
+          link.innerHTML = opt.innerHTML;
+          optionsDiv.appendChild(link);
+        });
+        container.appendChild(optionsDiv);
+        navMenu.appendChild(container);
+        toggleBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleBtn.classList.toggle('expanded');
+          optionsDiv.classList.toggle('expanded');
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileLangMenu); }
+      else { initMobileLangMenu(); }
+      window.addEventListener('resize', function() { clearTimeout(window._mlrt); window._mlrt = setTimeout(initMobileLangMenu, 250); });
+    })();
+    </script>
+</body>
+</html>

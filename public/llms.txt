@@ -1,0 +1,55 @@
+# Business — Generative Engine Optimization Map
+
+---
+
+## Pages
+
+### בית
+https://example.com
+משרד אדריכלות ועיצוב פנים בוטיק עם 30 שנות ניסיון. מהתחדשות עירונית ותמ״א 38 ועד עיצוב בית פרטי — מקצועיות אישית ברמה הגבוהה ביותר. גלו את הסטודיו.
+
+### אודות
+https://example.com/about
+יעל טומשין, אדריכלית עם כמעט 30 שנות ניסיון, מובילה סטודיו בוטיק שמשלב יכולת מוסדית עם קשב אישי נדיר. הכירו את הסיפור שמאחורי כל פרויקט מוצלח.
+
+### פרויקטים
+https://example.com/projects
+מבנייה רוויה ופינוי בינוי ועד בתים פרטיים ועיצוב פנים — תיק עבודות עשיר שמוכיח מצוינות בכל קנה מידה. צפו בפרויקטים ותנו לעצמכם לקבל השראה.
+
+### שירותים
+https://example.com/services
+ניהול פרויקט מלא, תכנון אדריכלי, עיצוב פנים, תמ״א 38, פינוי בינוי וחיזוק מבנים — מעטפת מקצועית שלמה ללקוחות פרטיים וליזמים. גלו את כל השירותים.
+
+### בלוג
+https://example.com/blog
+מאמרים מקצועיים על התחדשות עירונית, תמ״א 38, טרנדים בעיצוב פנים וטיפים לבנייה חכמה — ידע אמיתי מניסיון של עשרות שנים. הישארו מעודכנים.
+
+### צור קשר
+https://example.com/contact
+רוצים לשמוע איך משרד אדריכלות ועיצוב פנים בוטיק יכול להפוך את החזון שלכם למציאות? צרו קשר עוד היום לייעוץ ראשוני ונתחיל לתכנן יחד.
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Business
+---
+
+# Additional Resources
+
+- **Sitemap**: https://example.com/sitemap.xml
+- **Robots.txt**: https://example.com/robots.txt
